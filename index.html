@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name="robots" content="noindex">
+  <title>BubbleView Task</title>
+  <link rel="stylesheet" href="lib/bubble-view.css">
+  </link>
+
+  <!-- Step 1. Define and load required resources -->
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src='lib/jspsych-6.1.0/jspsych.js'></script>
+  <script src='lib/jspsych-6.1.0/plugins/jspsych-fullscreen.js'></script>
+  <script src='lib/jspsych-6.1.0/plugins/jspsych-instructions.js'></script>
+  <script src='lib/jspsych-6.1.0/plugins/jspsych-survey-text.js'></script>
+  <script src='lib/jspsych-6.1.0/plugins/jspsych-html-button-response.js'></script>
+  <script src="lib/jspsych-single-image.js"></script>
+  <script src="lib/jspsych-bubble-view.js"></script>
+  <script src="lib/bubble-view_main.js"></script>
+</head>
+
+<body>
+  <!-- Step 2: Add `display_stage` CSS, DIV, and extra scripts for Qualtrics -->
+  <!-- COPY PASTE TO QUALTRICS FROM HERE -->
+  <link href="https://kywch.github.io/BubbleView_jsPsych/lib/bubble-view.css" rel="stylesheet" type="text/css">
+  </link>
+  <div>
+    <span style="font-size: 24px;">
+      <br><br>
+      If you are seeing this message for <span style="color: rgb(255, 0, 0);">
+        <b>more than 5 minutes</b></span>,<br>
+      please screen-capture this screen and send the image to us.
+      <br><br>
+      <span style="font-size: 28px;">We are very sorry for the inconvenience.</span>
+    </span>
+  </div>
+
+  <style>
+    #display_stage_background {
+      width: 100vw;
+      background-color: white;
+      z-index: -1;
+    }
+
+    #display_stage {
+      position: fixed;
+      left: 1vw;
+      top: 1vh;
+      height: 98vh;
+      width: 98vw;
+      background-color: white;
+      box-shadow: 1px 1px 1px #999;
+      border-radius: 15px;
+      z-index: 0;
+      overflow-y: hidden;
+      overflow-x: hidden;
+    }
+  </style>
+  <!-- COPY PASTE TO QUALTRICS UP TO HERE -->
+
+  <div id='display_stage_background'></div>
+  <div id='display_stage'></div>
+
+</body>
+
+<script>
+  /* Step 3: Define image locations and a helper functions generating instructions and trial sequence */
+  // instruction image location
+  var instr_url = 'https://kywch.github.io/BubbleView_jsPsych/instructions/';
+  var instr_imglist = [];
+  for (var ii = 0; ii < 5; ii++) {
+    instr_imglist.push(instr_url + 'Slide' + (ii + 1).toString() + '.PNG');
+    console.log("test"+ii);
+  }
+
+  function generate_instruction_page(imglist) {
+    var instructions_page = {
+      type: 'instructions',
+      pages: function () {
+        var pages = [];
+        for (var ii = 0; ii < imglist.length; ii++) {
+          pages.push('<img class="resize" src="' + imglist[ii] + '">');
+        }
+        pages.push(
+          '<div class = centerbox><p class = block-text>You can read the instruction again by clicking the <strong>Previous</strong> button.</p>' +
+          '<p class = block-text>Clicking the <strong>Next</strong> button will finish the instruction.</p></div>'
+        );
+        return pages;
+      },
+      data: {
+        exp_stage: 'task_instructions_page'
+      },
+      allow_keys: false,
+      show_clickable_nav: true,
+      show_page_number: true
+    };
+    return instructions_page;
+  }
+
+  // stimulus definition
+  // for the images that have 'a' in the fourth place, we will ask Ps to describe those
+  var img_ext = 'png';
+  var pracImg_src = 'images_prac/';
+  var pracBlur_src = 'images_prac/blur/';
+  var pracImg_set = ["img1", "img2", "img3"];
+  var pracImg_attn = ["img3"]; // images to describe
+
+  var mainImg_src = 'images_main/';
+  var mainBlur_src = 'images_main/blur/';
+  var mainImg_set = [
+    "fl1", "fl2", "fl3", "fl4", "fl5", "fl6", "fl7", "fr1", "fr2", "fr3", "fr4", "fr5", "fr6"
+  ];
+  var mainImg_attn = [ // images to describe
+    "fl3", "fl6", "fr3", "fr6"
+  ];
+
+  // rating-related questions and items
+  var rating_prompt = 'Do you think the image contained false information?';
+  var rating_buttons = ['Yes', 'No'];
+
+  /* Step 4: Define the experiment flow */
+  // NOTE that the functions used below are defined in `bubble-view_main.js` for readability
+  var jspsych_session = [];
+
+  // use the full screen
+  jspsych_session.push({
+    type: 'fullscreen',
+    fullscreen_mode: true
+  });
+
+  jspsych_session.push(generate_instruction_page(instr_imglist));
+
+  jspsych_session.push({
+    timeline: generate_practice_block(
+      pracImg_src, pracBlur_src, jsPsych.randomization.shuffle([...pracImg_set]),
+      img_ext, pracImg_attn, rating_prompt, rating_buttons)
+  });
+
+  jspsych_session.push({
+    timeline: generate_main_block(
+      mainImg_src, mainBlur_src, jsPsych.randomization.shuffle([...mainImg_set]),
+      img_ext, mainImg_attn, rating_prompt, rating_buttons)
+  });
+
+  // exit the full screen
+  jspsych_session.push({
+    type: 'fullscreen',
+    fullscreen_mode: false
+  });
+
+
+  /* Step 5: Run the experiment. */
+  jsPsych.init({
+    timeline: jspsych_session,
+    preload_images: instr_imglist,
+    display_element: 'display_stage',
+
+    exclusions: { // browser window needs to have these dimensions, if not, participants get the chance to maximize their window, if they don't support this resolution when maximized they can't particiate.
+      min_width: 1000,
+      min_height: 700
+    },
+
+    on_finish: function () {
+      // csv-like string: delimiter - space (' '), newline - semicolon (';')
+      // results_string = 'trial image_name event_type time_from_onset x_loc y_loc;';
+      console.log(result_string);
+
+      // Also display in the result page as well
+      var display_element = jsPsych.getDisplayElement();
+      display_element.innerHTML =
+        "Results will be stored as a single string variable with a csv-like formatting<br>" +
+        "so that it can easily saved into Qualtrics Embedded Data.<p>" +
+        "delimiter - space (' '), newline - semicolon (';')<p>" +
+        "<b>Result string ==></b> " + result_string;
+    }
+  });
+</script>
+
+</html>
