@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 <html>
 
 <head>
@@ -18,12 +18,14 @@
   <script src="lib/jspsych-single-image.js"></script>
   <script src="lib/jspsych-bubble-view.js"></script>
   <script src="lib/bubble-view_main.js"></script>
+  <!-- <link href="https://kywch.github.io/BubbleView_jsPsych/lib/bubble-view.css" rel="stylesheet" type="text/css"> -->
+
 </head>
+
 
 <body>
   <!-- Step 2: Add `display_stage` CSS, DIV, and extra scripts for Qualtrics -->
   <!-- COPY PASTE TO QUALTRICS FROM HERE -->
-  <link href="https://kywch.github.io/BubbleView_jsPsych/lib/bubble-view.css" rel="stylesheet" type="text/css">
   </link>
   <div>
     <span style="font-size: 24px;">
@@ -36,27 +38,6 @@
     </span>
   </div>
 
-  <style>
-    #display_stage_background {
-      width: 100vw;
-      background-color: white;
-      z-index: -1;
-    }
-
-    #display_stage {
-      position: fixed;
-      left: 1vw;
-      top: 1vh;
-      height: 98vh;
-      width: 98vw;
-      background-color: white;
-      box-shadow: 1px 1px 1px #999;
-      border-radius: 15px;
-      z-index: 0;
-      overflow-y: hidden;
-      overflow-x: hidden;
-    }
-  </style>
   <!-- COPY PASTE TO QUALTRICS UP TO HERE -->
 
   <div id='display_stage_background'></div>
