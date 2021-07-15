@@ -9,13 +9,17 @@
   </link>
 
   <!-- Step 1. Define and load required resources -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/10.1.0/Dropbox-sdk.min.js" integrity="sha512-n77bNS9IGwE/zE23lPm8fRBA0vr25L8WN9xqIxiSDXSSbJHLrWVyvArYSxX97ybAiP3Zlvyhbs2HJvFmEfjgWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
   <script src='lib/jspsych-6.1.0/jspsych.js'></script>
   <script src='lib/jspsych-6.1.0/plugins/jspsych-fullscreen.js'></script>
   <script src='lib/jspsych-6.1.0/plugins/jspsych-instructions.js'></script>
   <script src='lib/jspsych-6.1.0/plugins/jspsych-survey-text.js'></script>
   <script src='lib/jspsych-6.1.0/plugins/jspsych-html-button-response.js'></script>
+  <script src='lib/jspsych-6.1.0/plugins/jspsych-html-slider-response.js'></script>
+
   <script src="lib/jspsych-single-image.js"></script>
+  <!-- <script src="js/nouislider.min.js"></script> -->
   <script src="lib/jspsych-bubble-view.js"></script>
   <script src="lib/bubble-view_main.js"></script>
   <!-- <link href="https://kywch.github.io/BubbleView_jsPsych/lib/bubble-view.css" rel="stylesheet" type="text/css"> -->
@@ -108,6 +112,7 @@
   var rating_prompt = 'Can you rate from 1 to 5 how truthful the information in this post was? 1 = not truthful at all and 5 = very truthful';
   var rating_buttons = ['1', '2' , '3' , '4' , '5'];
 
+  
   /* Step 4: Define the experiment flow */
   // NOTE that the functions used below are defined in `bubble-view_main.js` for readability
   var jspsych_session = [];
