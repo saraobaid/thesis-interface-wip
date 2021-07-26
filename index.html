@@ -4,7 +4,7 @@
 <head>
   <meta charset='UTF-8'>
   <meta name="robots" content="noindex">
-  <title>BubbleView Task</title>
+  <title>Image View</title>
   <link rel="stylesheet" href="lib/bubble-view.css">
   </link>
 
@@ -67,10 +67,10 @@
         for (var ii = 0; ii < imglist.length; ii++) {
           pages.push('<img class="resize" src="' + imglist[ii] + '">');
         }
-        pages.push(
-          '<div class = centerbox><p class = block-text>You can read the instruction again by clicking the <strong>Previous</strong> button.</p>' +
-          '<p class = block-text>Clicking the <strong>Next</strong> button will finish the instruction.</p></div>'
-        );
+        // pages.push(
+        //   '<div class = centerbox><p class = block-text>You can read the instruction again by clicking the <strong>Previous</strong> button.</p>' +
+        //   '<p class = block-text>Clicking the <strong>Next</strong> button will finish the instruction.</p></div>'
+        // );
         return pages;
       },
       data: {
