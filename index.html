@@ -15,6 +15,7 @@
   <script src='lib/jspsych-6.1.0/plugins/jspsych-fullscreen.js'></script>
   <script src='lib/jspsych-6.1.0/plugins/jspsych-instructions.js'></script>
   <script src='lib/jspsych-6.1.0/plugins/jspsych-survey-text.js'></script>
+  <script src='lib/jspsych-6.1.0/plugins/jspsych-survey-html-form.js'></script>
   <script src='lib/jspsych-6.1.0/plugins/jspsych-html-button-response.js'></script>
   <script src='lib/jspsych-6.1.0/plugins/jspsych-html-slider-response.js'></script>
 
@@ -169,11 +170,14 @@
 
       // Also display in the result page as well
       var display_element = jsPsych.getDisplayElement();
+      
       display_element.innerHTML =
-        "Results will be stored as a single string variable with a csv-like formatting<br>" +
-        "so that it can easily saved into Qualtrics Embedded Data.<p>" +
-        "delimiter - space (' '), newline - semicolon (';')<p>" +
-        "<b>Result string ==></b> " + result_string;
+        "The main trial is now finished. Kindle proceed to the survey by clicking <a href='https://newschool.qualtrics.com/jfe/form/SV_1A293ml5J8VsPZk'>here</a>";
+      // display_element.innerHTML =
+      //   "Results will be stored as a single string variable with a csv-like formatting<br>" +
+      //   "so that it can easily saved into Qualtrics Embedded Data.<p>" +
+      //   "delimiter - space (' '), newline - semicolon (';')<p>" +
+      //   "<b>Result string ==></b> " + result_string;
     }
   });
 </script>
