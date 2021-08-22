@@ -110,8 +110,9 @@
   // console.log(mainImg_attn)
 
   // rating-related questions and items
-  var rating_prompt = `Please carefully rate the truthfulness of that post from 0 (not truthful at all) to 100 (very truthful).` + '<br><br>' + `Use the middle of the slider if the post was neither untruthful nor truthful, or if you are not sure.`;
-  var rating_buttons = ['0','100'];
+  var rating_prompt = `To the best of your knowledge, how accurate is the claim in the previous Facebook post?`;
+  var rating_buttons = ['1. not at all accurate', '2. not very accurate' , '3. somewhat accurate' , '4. very accurate'];
+
 
   
   /* Step 4: Define the experiment flow */
