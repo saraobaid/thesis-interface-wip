@@ -56,9 +56,10 @@
   var instr_src = 'instructions/';
   var instr_imglist = [];
   for (var ii = 0; ii < 2; ii++) {
-    instr_imglist.push(instr_src + 'inst' + (ii + 1).toString() + '.png');
+    instr_imglist.push(instr_src + 'Inst' + (ii + 1).toString() + '.png');
     console.log("test"+ii);
   }
+  console.log(instr_imglist);
 
   function generate_instruction_page(imglist) {
     var instructions_page = {
