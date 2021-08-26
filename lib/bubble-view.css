@@ -60,7 +60,7 @@ p {
   text-align: justify;
   margin: 0 auto;
   margin-bottom: 1em;
-  font-size: 2.5vh;
+  font-size: 2vh;
   line-height: 130%;
 }
 
@@ -70,7 +70,7 @@ p {
   text-align: center;
   margin: 0 auto;
   margin-bottom: 0.5em;
-  font-size: 3vh;
+  font-size: 2.5vh;
   line-height: 130%;
 }
 
@@ -139,7 +139,7 @@ p {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
-  margin-top: 2%;
+  margin-top: 1%;
 }
 
 #jspsych-instructions-next,
