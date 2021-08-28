@@ -60,6 +60,21 @@
     console.log("test"+ii);
   }
   console.log(instr_imglist);
+  
+  var practice_id_entry = {
+    type: "survey-html-form",
+    preamble: "<div><p>Enter your Prolific ID:</p> </div >",
+    html: '<p><input id="id_box" name="proli_id" type="text" /></p>',
+    autofocus: "id_box",
+    // allow_keys: true,
+    // show_clickable_nav: true,
+    // allow_backward: false,
+    // show_page_number: false,
+    data: {
+      exp_stage: "practice_id_entry",
+      sbj_id: sbj_id,
+    }
+  };
 
   function generate_instruction_page(imglist) {
     var instructions_page = {
@@ -126,6 +141,8 @@
     fullscreen_mode: true
   });
 
+  jspsych_session.push(practice_id_entry);
+    
   jspsych_session.push(generate_instruction_page(instr_imglist));
 
   jspsych_session.push({
