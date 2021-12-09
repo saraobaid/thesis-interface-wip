@@ -64,7 +64,7 @@
   var practice_id_entry = {
     type: "survey-html-form",
     preamble: "<div><p>Enter your Prolific ID:</p> </div >",
-    html: '<p><input id="id_box" name="proli_id" type="text" /></p>',
+    html: '<p><input id="id_box" name="proli_id" type="text" required /></p>',
     autofocus: "id_box",
     // allow_keys: true,
     // show_clickable_nav: true,
@@ -152,53 +152,57 @@
       img_ext, rating_prompt, rating_buttons)
   });
 
-  jspsych_session.push({
-    timeline: generate_main_block(
-      mainImg_src, mainBlur_src, jsPsych.randomization.sampleWithoutReplacement(mainImg_set, 1),
-      img_ext, rating_prompt, rating_buttons)
-  });
+  load_data(function(log) {
+    var { stats, history } = log;
+    // set the default values
+    jspsych_session.push({
+      timeline: generate_main_block(
+        mainImg_src, mainBlur_src, jsPsych.randomization.sampleWithoutReplacement(mainImg_set, 1),
+        img_ext, rating_prompt, rating_buttons, stats)
+    });
 
-  // jspsych_session.push({
-  //   timeline: generate_main_block(
-  //     mainImg_src, mainBlur_src, jsPsych.randomization.shuffle([...mainImg_set]),
-  //     img_ext, mainImg_attn, rating_prompt, rating_buttons)
-  // });
-
-
-  // exit the full screen
-  jspsych_session.push({
-    type: 'fullscreen',
-    fullscreen_mode: false
-  });
+    // jspsych_session.push({
+    //   timeline: generate_main_block(
+    //     mainImg_src, mainBlur_src, jsPsych.randomization.shuffle([...mainImg_set]),
+    //     img_ext, mainImg_attn, rating_prompt, rating_buttons)
+    // });
 
 
-  /* Step 5: Run the experiment. */
-  jsPsych.init({
-    timeline: jspsych_session,
-    preload_images: instr_imglist,
-    display_element: 'display_stage',
+    // exit the full screen
+    jspsych_session.push({
+      type: 'fullscreen',
+      fullscreen_mode: false
+    });
 
-    exclusions: { // browser window needs to have these dimensions, if not, participants get the chance to maximize their window, if they don't support this resolution when maximized they can't particiate.
-      min_width: 1000,
-      min_height: 700
-    },
 
-    on_finish: function () {
-      // csv-like string: delimiter - space (' '), newline - semicolon (';')
-      // results_string = 'trial image_name event_type time_from_onset x_loc y_loc;';
-      console.log(result_string);
+    /* Step 5: Run the experiment. */
+    jsPsych.init({
+      timeline: jspsych_session,
+      preload_images: instr_imglist,
+      display_element: 'display_stage',
 
-      // Also display in the result page as well
-      var display_element = jsPsych.getDisplayElement();
-      
-      display_element.innerHTML =
-        "Please click <a href='https://newschool.qualtrics.com/jfe/form/SV_1A293ml5J8VsPZk'>here</a> to proceed to the debriefing survey.";
-      // display_element.innerHTML =
-      //   "Results will be stored as a single string variable with a csv-like formatting<br>" +
-      //   "so that it can easily saved into Qualtrics Embedded Data.<p>" +
-      //   "delimiter - space (' '), newline - semicolon (';')<p>" +
-      //   "<b>Result string ==></b> " + result_string;
-    }
+      exclusions: { // browser window needs to have these dimensions, if not, participants get the chance to maximize their window, if they don't support this resolution when maximized they can't particiate.
+        min_width: 1000,
+        min_height: 700
+      },
+
+      on_finish: function () {
+        // csv-like string: delimiter - space (' '), newline - semicolon (';')
+        // results_string = 'trial image_name event_type time_from_onset x_loc y_loc;';
+        console.log(result_string);
+
+        // Also display in the result page as well
+        var display_element = jsPsych.getDisplayElement();
+        
+        display_element.innerHTML =
+          "Please click <a href='https://newschool.qualtrics.com/jfe/form/SV_1A293ml5J8VsPZk'>here</a> to proceed to the debriefing survey.";
+        // display_element.innerHTML =
+        //   "Results will be stored as a single string variable with a csv-like formatting<br>" +
+        //   "so that it can easily saved into Qualtrics Embedded Data.<p>" +
+        //   "delimiter - space (' '), newline - semicolon (';')<p>" +
+        //   "<b>Result string ==></b> " + result_string;
+      }
+    });
   });
 </script>
 
